@@ -1,18 +1,20 @@
 pipeline {
-	agent any
-	stages {
-   	stage('test'){
+   agent any
+   	stage('build'){
 			steps {
-			    echo 'hey im test'
-			sh 'mvn clean package'
+				sh 'mvn build' 
 			}
 		}
 
-              }
-   	post {
-   	  	always {
-		 
-                  echo 'hey I am here'
+   	stage('test'){
+			steps {
+				sh 'mvn test' 
+			}
+		}
+
+   	stage('run'){
+			steps {
+				sh 'mvn spring-boot:run' 
 			}
 		}
 
