@@ -1,19 +1,29 @@
 pipeline {
 	agent any
+	environment {
+   		env2 = 'Nice work!'
+   		env1 = 'Hello Shekhar!'
+	}
 	stages {
    	stage('test'){
 			steps {
-			    echo 'hey im test'
-			sh 'mvn clean package'
+				sh 'mvn test' 
 			}
 		}
 
-              }
-   	post {
-   	  	always {
-		 
-                  echo 'hey I am here'
+   	stage('run'){
+			steps {
+				sh 'mvn spring-boot:run' 
 			}
 		}
 
+	}
+	post {
+		always {
+                  start.sh
+		}
+		changed {
+                  start1.sh
+		}
+	}
 }
